@@ -69,9 +69,9 @@ import {FaPencilAlt, FaTimes} from 'react-icons/fa';
 
 
   function handleDeleteClick(id) {
-    // here we are filtering - the idea is remove an item from the todo array on a button click
+   
     const removeItem = todos.filter((todo) => {
-      // return the rest of the todos that don't match the item we are deleting
+     
       return todo.id !== id;
     });
     // removeItem returns a new array - so now we are setting the todos to the new array
