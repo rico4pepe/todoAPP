@@ -1,23 +1,18 @@
 
 import './App.css';
-import AddTask from './componets/AddTask';
-import Tasks from './componets/Tasks';
-//hooks
+
+
 import { useState, useEffect } from "react";
 
-//Packages
+
 import { v4 as uuidv4 } from 'uuid';
 import Swal from "sweetalert2";
 import {FaPencilAlt, FaTimes} from 'react-icons/fa';
 
  function App() {
-  // need state to keep track of todos
-  // because localstorage is synchronous - that could slow down the application
-  // instead of using an just an empty array as the initial state - we can use a function in its place,
-  // which will only be executed on the initial render
-  // reference: https://reactjs.org/docs/hooks-reference.html#lazy-initial-state
+
   const [todos, setTodos] = useState([]);
-  // need state to keep track of the value in the input
+
   const [todo, setTodo] = useState("");
   const getTasks = JSON.parse(localStorage.getItem("todos"));
   useEffect(() => {
