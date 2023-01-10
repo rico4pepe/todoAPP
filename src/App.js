@@ -22,6 +22,11 @@ import {FaPencilAlt, FaTimes} from 'react-icons/fa';
         setTodos(getTasks);
       }
   }, [])
+
+
+  const [isEditing, setIsEditing] = useState(false);
+  // object state to set so we know which todo item we are editing
+  const [currentTodo, setCurrentTodo] = useState({});
  
   // function to get the value of the input and set the new state
   function handleInputChange(e) {
@@ -74,58 +79,119 @@ import {FaPencilAlt, FaTimes} from 'react-icons/fa';
      
       return todo.id !== id;
     });
-    // removeItem returns a new array - so now we are setting the todos to the new array
+ 
     setTodos(removeItem);
 
     localStorage.setItem("todos", JSON.stringify(removeItem));
   }
 
-  function handleEditClick(id) {
-    // here we are filtering - the idea is remove an handleEditClickitem from the todo array on a button click
-    const text = prompt("Task Name");
-    console.log("Hello i gtot here ", text, "Get Id also", id);
-  
-    let data = JSON.parse(localStorage.getItem('todos'));
-    const myData = data.map(x => {
-    
-      if (x.id === id) {
 
-    
-          return {
-              ...x,
-              text: text.trim(),
-              id: uuidv4()
-          }
-      }
-      return x;
-  })
-  Swal.fire({
-    icon: 'success',
-    title: 'Yay...',
-    text: 'You have successfully edited an existing task!'
-})
-localStorage.setItem("todos", JSON.stringify(myData));
-window.location.reload();
-
+  function handleEditInputChange(e) {
+    // set the new state value to what's currently in the edit input box
+    setCurrentTodo({ ...currentTodo, text: e.target.value });
+    console.log(currentTodo);
   }
+
+
+  function handleUpdateTodo(id, updatedTodo) {
+ 
+    const updatedItem = todos.map((todo) => {
+      return todo.id === id ? updatedTodo : todo;
+    });
+    // set editing to false because this function will be used inside a onSubmit function - which means the data was submited and we are no longer editing
+    setIsEditing(false);
+    // update the todos state with the updated todo
+    setTodos(updatedItem);
+    Swal.fire({
+          icon: 'success',
+          title: 'Yay...',
+          text: 'You have successfully edited an existing task!'
+      })
+    localStorage.setItem("todos", JSON.stringify(updatedItem));
+  }
+
+//   function handleEditClick(id) {
+   
+//     const text = prompt("Task Name");
+//     console.log("Hello i gtot here ", text, "Get Id also", id);
+  
+//     let data = JSON.parse(localStorage.getItem('todos'));
+//     const myData = data.map(x => {
+    
+//       if (x.id === id) {
+
+    
+//           return {
+//               ...x,
+//               text: text.trim(),
+//               id: uuidv4()
+//           }
+//       }
+//       return x;
+//   })
+//   Swal.fire({
+//     icon: 'success',
+//     title: 'Yay...',
+//     text: 'You have successfully edited an existing task!'
+// })
+// localStorage.setItem("todos", JSON.stringify(myData));
+// window.location.reload();
+
+//   }
+
+
+function handleEditClick(todo) {
+  // set editing to true
+  setIsEditing(true);
+  // set the currentTodo to the todo item that was clicked
+  setCurrentTodo({ ...todo });
+}
+
+
+function handleEditFormSubmit(e) {
+  e.preventDefault();
+
+  // call the handleUpdateTodo function - passing the currentTodo.id and the currentTodo object as arguments
+  handleUpdateTodo(currentTodo.id, currentTodo);
+}
 
   return (
     <div className="App">
+
+
+
    
-      
-      <form className="add-form" onSubmit={handleFormSubmit}>
-      <div className="form-control">
-      <label>My To DO List</label>
-        <input
-          name="todo"
-          type="text"
-          placeholder="Create a new todo"
-          value={todo}
-          onChange={handleInputChange}
-        />
-        <button className="btn btn-block"> Add Task</button>
-        </div>
-      </form>
+      {isEditing ? (
+           <form className="add-form" onSubmit={handleEditFormSubmit}>
+           <div className="form-control">
+           <label>Edit To Do List</label>
+             <input
+               name="todo"
+               type="text"
+               placeholder="Create a new todo"
+               value={currentTodo.Text}
+               onChange={handleEditInputChange}
+             />
+             <button className="btn btn-block"> Update Task</button>
+             <button className="btn btn-block-cancel" onClick={() => setIsEditing(false)}>Cancel</button>
+             </div>
+           </form>
+      ) : (
+        <form className="add-form" onSubmit={handleFormSubmit}>
+        <div className="form-control">
+        <label>My To DO List</label>
+          <input
+            name="todo"
+            type="text"
+            placeholder="Create a new todo"
+            value={todo}
+            onChange={handleInputChange}
+          />
+          <button className="btn btn-block"> Add Task</button>
+          </div>
+        </form>
+      )}
+     
 
 
       <table class="table-style">
@@ -135,7 +201,7 @@ window.location.reload();
           {todo.text} 
           </td>
           <td>
-          <FaTimes onClick={() => handleDeleteClick(todo.id)} className="delIcon" /> ||  <FaPencilAlt onClick={() => handleEditClick(todo.id)} className="editIcon" />
+          <FaTimes onClick={() => handleDeleteClick(todo.id)} className="delIcon" /> &nbsp;  <FaPencilAlt onClick={() => handleEditClick(todo)} className="editIcon" />
           </td>
         </tr>
         ))}
