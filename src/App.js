@@ -8,6 +8,13 @@ import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from 'uuid';
 import Swal from "sweetalert2";
 import {FaPencilAlt, FaTimes} from 'react-icons/fa';
+import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Button from 'react-bootstrap/Button';
+import Table from 'react-bootstrap/Table';
+
 
  function App() {
 
@@ -161,39 +168,59 @@ function handleEditFormSubmit(e) {
 
    
       {isEditing ? (
-           <form className="add-form" onSubmit={handleEditFormSubmit}>
-           <div className="form-control">
+           <Form className="add-form" onSubmit={handleEditFormSubmit}>
+           <div className="">
+           <div class="col-md-12 text-center">
            <label>Edit To Do List</label>
-             <input
-               name="todo"
-               type="text"
-               placeholder="Edit todo"
-               value={currentTodo.text}
-               onChange={handleEditInputChange}
-             />
-             <button className="btn btn-block"> Update Task</button>
-             <button className="btn btn-block-cancel" onClick={() => setIsEditing(false)}>Cancel</button>
+           </div>
+           
+           <Row>
+        <Form.Group className="mb-3">
+        <Form.Control 
+        name="todo"
+        type="text"
+        placeholder="Edit todo"
+        value={currentTodo.text}
+        onChange={handleEditInputChange}
+        />
+      </Form.Group>
+        </Row>
+        <div class="col-md-12 text-center">
+            <Button  variant="primary" type="submit"> Update Task</Button >&nbsp;&nbsp;
+            <Button  variant="warning" type="submit" onClick={() => setIsEditing(false)}>Cancel</Button >
              </div>
-           </form>
+            </div>
+           </Form>
       ) : (
-        <form className="add-form" onSubmit={handleFormSubmit}>
-        <div className="form-control">
-        <label>My To DO List</label>
-          <input
-            name="todo"
-            type="text"
-            placeholder="Create a new todo"
-            value={todo}
-            onChange={handleInputChange}
-          />
-          <button className="btn btn-block"> Add Task</button>
+        <Form className="add-form" onSubmit={handleFormSubmit}>
+        <div className="">
+        <div class="col-md-12 text-center">
+        <label className='Mylabel'>My To Do List</label>
+        </div>
+
+        <Row>
+        <Form.Group className="mb-3">
+        <Form.Control placeholder="Create a new todo"   value={todo}  onChange={handleInputChange}/>
+      </Form.Group>
+        </Row>
+        <Row> 
+          <Button  variant="primary" type="submit"> Add Task</Button >
+        </Row>
           </div>
-        </form>
+        </Form>
       )}
      
 
 
-      <table class="table-style">
+      <Table striped bordered hover>
+      <thead>
+        <tr>
+         
+          <th>Task</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
       {todos.map((todo) => (
         <tr key={todo.id}>
           <td>
@@ -204,7 +231,9 @@ function handleEditFormSubmit(e) {
           </td>
         </tr>
         ))}
-      </table>
+      </tbody>
+     
+      </Table>
 
 
     </div>

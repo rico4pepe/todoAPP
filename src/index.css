@@ -20,67 +20,27 @@ code {
 .add-form {
   margin-bottom: 40px;
 }
-.form-control {
+.my-control {
   margin: 20px 0;
   background-color: red;
   color:#fff;
 }
-.form-control label {
-  display: block;
-  text-align: center;
-  margin-bottom: 5px;
-}
-.form-control input {
-  width: 70%;
-  height: 20px;
-  padding: 3px 7px;
-  font-size: 17px;
+
+
+.App{
+  margin: 0px auto;
+  width: 80%;
 }
 
 
 
-.form-control input:focus {
-  outline: 0;
-}
-.btn {
-  background: #000;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  cursor: pointer;
-  text-decoration: none;
-}
+
 .btn:focus {
   outline: none;
   color: white;
 }
-.btn-block {
-  width: 20%;
-  height: 30px;
-  padding: 3px 7px;
-  font-size: 17px;
-  margin-bottom: 10px;
-}
-.btn-block-cancel {
-  width: 5%;
-  height: 30px;
-  padding: 3px 7px;
-  font-size: 17px;
-  margin-bottom: 10px;
-  text-align: center;
-  margin-left: 2px;
-}
 
 
-.task {
-  background: #f4f4f4;
-  margin: 5px;
-  padding: 10px 20px;
-  cursor: pointer;
-  border-radius: 5px;
-  display: flex;
-  justify-content: space-between;
-}
 .textBold {
   font-weight: bold;
 }
@@ -104,7 +64,7 @@ ul {
  
   }  
 
-  .table-style{
+  /* .table-style{
     width: 100%;
   }
 
@@ -118,4 +78,4 @@ ul {
 
   tr:nth-child(odd) {
       background-color: #8F9AA5;
-  }
+  } */
