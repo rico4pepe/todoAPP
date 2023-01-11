@@ -87,9 +87,8 @@ import {FaPencilAlt, FaTimes} from 'react-icons/fa';
 
 
   function handleEditInputChange(e) {
-    // set the new state value to what's currently in the edit input box
     setCurrentTodo({ ...currentTodo, text: e.target.value });
-    console.log(currentTodo);
+    console.log("Hello ", currentTodo);
   }
 
 
@@ -98,9 +97,9 @@ import {FaPencilAlt, FaTimes} from 'react-icons/fa';
     const updatedItem = todos.map((todo) => {
       return todo.id === id ? updatedTodo : todo;
     });
-    // set editing to false because this function will be used inside a onSubmit function - which means the data was submited and we are no longer editing
+  
     setIsEditing(false);
-    // update the todos state with the updated todo
+  
     setTodos(updatedItem);
     Swal.fire({
           icon: 'success',
@@ -168,8 +167,8 @@ function handleEditFormSubmit(e) {
              <input
                name="todo"
                type="text"
-               placeholder="Create a new todo"
-               value={currentTodo.Text}
+               placeholder="Edit todo"
+               value={currentTodo.text}
                onChange={handleEditInputChange}
              />
              <button className="btn btn-block"> Update Task</button>
